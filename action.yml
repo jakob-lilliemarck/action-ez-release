@@ -1,11 +1,13 @@
-name: 'Release'
-description: 'Create a GitHub release'
+name: "Hello World"
+description: "Greet someone and record the time"
 inputs:
-  artifacts:
-    description: 'Comma separated list of paths to include as release assets'
+  who-to-greet: # id of input
+    description: "Who to greet"
+    required: true
+    default: "World"
 outputs:
-  location: 
-    description: 'The URI of the created release'
+  time: # id of output
+    description: "The time we greeted you"
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: "node20"
+  main: "index.js"
