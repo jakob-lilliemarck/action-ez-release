@@ -1,0 +1,11 @@
+name: 'Release'
+description: 'Create a GitHub release'
+inputs:
+  artifacts:
+    description: 'Comma separated list of paths to include as release assets'
+outputs:
+  location: 
+    description: 'The URI of the created release'
+runs:
+  using: 'node20'
+  main: 'index.js'
