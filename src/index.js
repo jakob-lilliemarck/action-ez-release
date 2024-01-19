@@ -1,26 +1,36 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const fs = require('node:fs');
+const { Octokit } = require("@octokit/action");
+
+const octokit = new Octokit({
+  auth: github.token
+})
+
 
 try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = core.getInput('artifacts');
 
-  artifacts.split(",").forEach((s) => {
-    fs.readFile(s.trim(), 'utf8', (err, data) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log(data);
-    });
+  const response = await octokit.request('POST /repos/{owner}/{repo}/releases', {
+    owner: github.repository_owner,
+    repo: github.repository,
+    tag_name: 'v1.0.0',
+    target_commitish: 'main',
+    name: 'v1.0.0',
+    body: 'Description of the release',
+    draft: false,
+    prerelease: false,
+    generate_release_notes: false,
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
   })
 
-  core.setOutput("location", "thisWillBeAURI");
+  core.setOutput("location", response.url);
 
   // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+  // const payload = JSON.stringify(github.context.payload, undefined, 2)
+  // console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
 }
