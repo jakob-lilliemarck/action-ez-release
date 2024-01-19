@@ -10,7 +10,8 @@ try {
   const artifacts = core.getInput('artifacts');
   const request = `POST /repos/jakob-lilliemarck/action-release-test/releases`
   console.log('request', request)
-  const response = await octokit.request(`POST /repos/${github.repository}/releases`, {
+
+  const response = await octokit.request(request, {
     owner: github.repository_owner,
     repo: github.repository,
     tag_name: 'v1.0.0',

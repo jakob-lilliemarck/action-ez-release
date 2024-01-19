@@ -53452,7 +53452,8 @@ try {
   const artifacts = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('artifacts');
   const request = `POST /repos/jakob-lilliemarck/action-release-test/releases`
   console.log('request', request)
-  const response = await octokit.request(`POST /repos/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.repository}/releases`, {
+
+  const response = await octokit.request(request, {
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.repository_owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.repository,
     tag_name: 'v1.0.0',
