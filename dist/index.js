@@ -53444,16 +53444,14 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 
 
 
-const octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_2__.Octokit({
-  auth: _actions_github__WEBPACK_IMPORTED_MODULE_1__.token
-})
+const octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_2__.Octokit()
 
 
 try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('artifacts');
 
-  const response = await octokit.request('POST /repos/{owner}/{repo}/releases', {
+  const response = await octokit.request(`POST /repos/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.repository}/releases`, {
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.repository_owner,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.repository,
     tag_name: 'v1.0.0',
