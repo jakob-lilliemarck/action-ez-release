@@ -53450,7 +53450,7 @@ const octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_2__.Octokit()
 try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('artifacts');
-  const request = `POST /repos/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.repository}/releases`
+  const request = `POST /repos/jakob-lilliemarck/action-release-test/releases`
   console.log('request', request)
   const response = await octokit.request(`POST /repos/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.repository}/releases`, {
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.repository_owner,
