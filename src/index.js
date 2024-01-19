@@ -2,16 +2,14 @@ import core from '@actions/core';
 import github from '@actions/github';
 import { Octokit } from '@octokit/action';
 
-const octokit = new Octokit({
-  auth: github.token
-})
+const octokit = new Octokit()
 
 
 try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = core.getInput('artifacts');
 
-  const response = await octokit.request('POST /repos/{owner}/{repo}/releases', {
+  const response = await octokit.request(`POST /repos/${github.repository}/releases`, {
     owner: github.repository_owner,
     repo: github.repository,
     tag_name: 'v1.0.0',
