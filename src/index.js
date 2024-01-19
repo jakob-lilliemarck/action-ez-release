@@ -1,10 +1,20 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const fs = require('node:fs');
 
 try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = core.getInput('artifacts');
-  console.log(`artifacts ${artifacts}`);
+
+  artifacts.split(",").forEach((s) => {
+    fs.readFile(s.trim(), 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(data);
+    });
+  })
 
   core.setOutput("location", "thisWillBeAURI");
 
