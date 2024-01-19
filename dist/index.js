@@ -29010,6 +29010,14 @@ module.exports = require("node:events");
 
 /***/ }),
 
+/***/ 7561:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs");
+
+/***/ }),
+
 /***/ 4492:
 /***/ ((module) => {
 
@@ -30792,11 +30800,21 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(1681);
 const github = __nccwpck_require__(7133);
+const fs = __nccwpck_require__(7561);
 
 try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = core.getInput('artifacts');
-  console.log(`artifacts ${artifacts}`);
+
+  artifacts.split(",").forEach((s) => {
+    fs.readFile(s.trim(), 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(data);
+    });
+  })
 
   core.setOutput("location", "thisWillBeAURI");
 
