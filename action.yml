@@ -8,4 +8,4 @@ outputs:
     description: 'The URI of the created release'
 runs:
   using: 'node20'
-  main: 'index.js'
+  main: 'dist/index.js'
