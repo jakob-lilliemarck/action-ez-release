@@ -1,13 +1,11 @@
-name: "Hello World"
-description: "Greet someone and record the time"
+name: "Release"
+description: "Create a GitHub release with optional assets"
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
-    required: true
-    default: "World"
+  artifacts:
+    description: "Comma separated list of files include as release assets"
 outputs:
-  time: # id of output
-    description: "The time we greeted you"
+  location:
+    description: "The URI of the GitHub release"
 runs:
   using: "node20"
   main: "dist/index.js"
