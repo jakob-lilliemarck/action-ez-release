@@ -3,7 +3,7 @@ import github from '@actions/github';
 
 try {
   const paths = core.getInput('artifacts');
-  console.log(`paths: ${paths}`);
+  console.log(`artifacts: ${artifacts}`);
 
   core.setOutput("location", "myUrlGoesHere");
   
