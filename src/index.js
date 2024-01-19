@@ -1,6 +1,6 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const { Octokit } = require("@octokit/action");
+import core from '@actions/core';
+import github from '@actions/github';
+import { Octokit } from '@octokit/action';
 
 const octokit = new Octokit({
   auth: github.token
