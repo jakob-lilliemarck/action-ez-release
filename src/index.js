@@ -8,8 +8,9 @@ const octokit = new Octokit()
 try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = core.getInput('artifacts');
+  const repo = github.context.repository
+  console.log(repo)
   const request = `POST /repos/jakob-lilliemarck/action-release-test/releases`
-  console.log('request', request)
 
   const response = await octokit.request(request, {
     owner: github.repository_owner,
