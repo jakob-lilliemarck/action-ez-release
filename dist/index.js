@@ -53488,8 +53488,7 @@ try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('artifacts');
   console.log('INPUTS', artifacts)
-  console.log('CONTEXT', _actions_github__WEBPACK_IMPORTED_MODULE_1__.context)
-  console.log('ENV', _actions_github__WEBPACK_IMPORTED_MODULE_1__.repository)
+  console.log('github', _actions_github__WEBPACK_IMPORTED_MODULE_1__)
   const request = (/* unused pure expression or super */ null && (`POST /repos/jakob-lilliemarck/action-release-test/releases`))
 
   //const response = await octokit.request(request, {

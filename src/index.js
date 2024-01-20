@@ -9,8 +9,7 @@ try {
   // `who-to-greet` input defined in action metadata file
   const artifacts = core.getInput('artifacts');
   console.log('INPUTS', artifacts)
-  console.log('CONTEXT', github.context)
-  console.log('ENV', github.repository)
+  console.log('github', github)
   const request = `POST /repos/jakob-lilliemarck/action-release-test/releases`
 
   //const response = await octokit.request(request, {
