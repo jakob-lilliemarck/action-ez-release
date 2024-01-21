@@ -69,15 +69,16 @@ try {
   console.log('upload_url', upload_url)
   console.log('upload_payload', upload_payload)
 
-  // Append assets
-  const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
-    ...upload_payload,
-    headers: {
-      'X-GitHub-Api-Version': '2022-11-28'
-    }
-  })
-  console.log('UPLOAD RESPONSE: ', upload_response)
-
+  setTimeout(async () => {
+    // Append assets
+    const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
+      ...upload_payload,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
+    console.log('UPLOAD RESPONSE: ', upload_response)
+  }, 3000)
   core.setOutput("location", html_url);
 } catch (error) {
   core.setFailed(error.message);
