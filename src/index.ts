@@ -40,7 +40,6 @@ try {
   const release_name = getInput('release_name');
   const release_body = getInput('release_body');
   const release_artifacts = getInput('release_artifacts');
-  const release_discussion = getInput('release_discussion');
   const generate_release_notes = boolean(getInput('generate_release_notes'));
   const { owner, repo } = getRepositoryInformation(github.context.payload)
 
@@ -77,5 +76,6 @@ try {
 
   core.setOutput("location", html_url);
 } catch (error) {
-  core.setFailed((error as unknown as { message: string }).message);
+  // @ts-ignore
+  core.setFailed(error.message);
 }

@@ -51677,7 +51677,6 @@ try {
     const release_name = getInput('release_name');
     const release_body = getInput('release_body');
     const release_artifacts = getInput('release_artifacts');
-    const release_discussion = getInput('release_discussion');
     const generate_release_notes = boolean(getInput('generate_release_notes'));
     const { owner, repo } = getRepositoryInformation((_actions_github__WEBPACK_IMPORTED_MODULE_1___default().context.payload));
     // Create release
@@ -51708,6 +51707,7 @@ try {
     _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setOutput("location", html_url);
 }
 catch (error) {
+    // @ts-ignore
     _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setFailed(error.message);
 }
 
