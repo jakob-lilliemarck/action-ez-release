@@ -53510,7 +53510,7 @@ try {
   const { owner, full_name, } = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.repository
 
   const release_payload = {
-    owner,
+    owner: owner.name,
     repo: full_name,
     tag_name,
     name,

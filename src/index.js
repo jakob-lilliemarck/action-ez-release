@@ -31,7 +31,7 @@ try {
   const { owner, full_name, } = github.context.payload.repository
 
   const release_payload = {
-    owner,
+    owner: owner.name,
     repo: full_name,
     tag_name,
     name,
