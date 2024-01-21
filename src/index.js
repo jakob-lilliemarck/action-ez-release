@@ -4,13 +4,18 @@ import { Octokit } from '@octokit/action';
 
 const octokit = new Octokit()
 
-const getRequiredInput = (key) => {
+const getInput = (key, type) => {
   const value = core.getInput(key);
-  if (value) return value
+  return value !== '' ? value : undefined
+}
+
+const required = (key) => {
+  const value = getInput(key)
+  if (value !== undefined) return value
   throw new Error(`Missing required input ${key}`)
 }
 
-const getBoolean = (value) => {
+const boolean = (value) => {
   switch (value) {
     case 'true':
       return true
@@ -21,12 +26,12 @@ const getBoolean = (value) => {
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const tag_name = getRequiredInput('tag_name');
-  const name = core.getInput('release_name');
-  const body = core.getInput('release_body');
-  const release_artifacts = core.getInput('release_artifacts');
-  const release_discussion = core.getInput('release_discussion');
-  const generate_release_notes = getBoolean(core.getInput('generate_release_notes'));
+  const tag_name = required(getInput('tag_name'));
+  const name = getInput('release_name');
+  const body = getInput('release_body');
+  const release_artifacts = getInput('release_artifacts');
+  const release_discussion = getInput('release_discussion');
+  const generate_release_notes = boolean(getInput('generate_release_notes'));
 
   const { owner, full_name, } = github.context.payload.repository
 

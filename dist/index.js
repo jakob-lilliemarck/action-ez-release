@@ -53483,13 +53483,18 @@ var __webpack_exports__ = {};
 
 const octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_2__.Octokit()
 
-const getRequiredInput = (key) => {
+const getInput = (key, type) => {
   const value = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput(key);
-  if (value) return value
+  return value !== '' ? value : undefined
+}
+
+const required = (key) => {
+  const value = getInput(key)
+  if (value !== undefined) return value
   throw new Error(`Missing required input ${key}`)
 }
 
-const getBoolean = (value) => {
+const boolean = (value) => {
   switch (value) {
     case 'true':
       return true
@@ -53500,12 +53505,12 @@ const getBoolean = (value) => {
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const tag_name = getRequiredInput('tag_name');
-  const name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('release_name');
-  const body = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('release_body');
-  const release_artifacts = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('release_artifacts');
-  const release_discussion = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('release_discussion');
-  const generate_release_notes = getBoolean(_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('generate_release_notes'));
+  const tag_name = required(getInput('tag_name'));
+  const name = getInput('release_name');
+  const body = getInput('release_body');
+  const release_artifacts = getInput('release_artifacts');
+  const release_discussion = getInput('release_discussion');
+  const generate_release_notes = boolean(getInput('generate_release_notes'));
 
   const { owner, full_name, } = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.repository
 
