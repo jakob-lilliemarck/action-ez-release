@@ -63,7 +63,7 @@ try {
 
 
   // Append assets
-  const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?${release_artifacts, 'test'}`, {
+  const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
     owner: owner.name,
     repo: full_name,
     release_id: id,
