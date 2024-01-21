@@ -61,7 +61,7 @@ try {
   const upload_payload = {
     owner: owner.name,
     repo: full_name,
-    release_id: id,
+    release_id: `${id}`,
     data: `@${release_artifacts}`
   }
 
@@ -79,6 +79,7 @@ try {
     })
     console.log('UPLOAD RESPONSE: ', upload_response)
   }, 3000)
+
   core.setOutput("location", html_url);
 } catch (error) {
   core.setFailed(error.message);
