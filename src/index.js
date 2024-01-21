@@ -56,7 +56,7 @@ try {
       }
     })
 
-  console.log('response: ', response)
+  console.log('response: ', response.data.id)
 
   // Append assets
   //const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
