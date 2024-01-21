@@ -1,8 +1,31 @@
 name: "Release"
 description: "Create a GitHub release with optional assets"
+author: Jakob Lilliemarck
 inputs:
-  artifacts:
+  tag_name:
+    description: "The name of the git tag."
+    required: true
+
+  release_name:
+    description: "Name of the release."
+    required: false
+
+  release_body:
+    description: "Description of contents."
+    required: false
+
+  release_artifacts:
     description: "Comma separated list of files include as release assets"
+    required: false
+
+  release_discussion:
+    description: "Create a discussion for the new release"
+    required: false
+
+  generate_release_notes:
+    description: "Automatically generate release names and notes"
+    required: false
+
 outputs:
   location:
     description: "The URI of the GitHub release"
