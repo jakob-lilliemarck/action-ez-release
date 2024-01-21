@@ -53489,7 +53489,7 @@ try {
   }
 
   // Create release
-  const { html_url, id } = await octokit.request(
+  const response = await octokit.request(
     `POST /repos/${full_name}/releases`,
     {
       ...release_payload,
@@ -53498,21 +53498,21 @@ try {
       }
     })
 
-  console.log('release id: ', id)
+  console.log('response: ', response)
 
   // Append assets
-  const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
-    owner: owner.name,
-    repo: full_name,
-    release_id: id,
-    data: `@${release_artifacts}`,
-    headers: {
-      'X-GitHub-Api-Version': '2022-11-28'
-    }
-  })
-  console.log('UPLOAD RESPONSE: ', upload_response)
+  //const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
+  //  owner: owner.name,
+  //  repo: full_name,
+  //  release_id: id,
+  //  data: `@${release_artifacts}`,
+  //  headers: {
+  //    'X-GitHub-Api-Version': '2022-11-28'
+  //  }
+  //})
+  //console.log('UPLOAD RESPONSE: ', upload_response)
 
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", html_url);
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", response.html_url);
 } catch (error) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }
