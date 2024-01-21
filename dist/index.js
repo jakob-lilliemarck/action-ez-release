@@ -53489,7 +53489,7 @@ try {
   }
 
   // Create release
-  const { data: { id, html_url } } = await octokit.request(
+  const { data: { id, html_url, upload_url: provided_upload_url } } = await octokit.request(
     `POST /repos/${full_name}/releases`,
     {
       ...release_payload,
@@ -53499,12 +53499,21 @@ try {
     })
 
 
-  // Append assets
-  const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
+  const upload_url = `POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`
+  const upload_payload = {
     owner: owner.name,
     repo: full_name,
     release_id: id,
-    data: `@${release_artifacts}`,
+    data: `@${release_artifacts}`
+  }
+
+  console.log('provided_upload_url', provided_upload_url)
+  console.log('upload_url', upload_url)
+  console.log('upload_payload', upload_payload)
+
+  // Append assets
+  const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
+    ...upload_payload,
     headers: {
       'X-GitHub-Api-Version': '2022-11-28'
     }
