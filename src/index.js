@@ -46,12 +46,8 @@ try {
     generate_release_notes,
   }
 
-  console.log('RELEASE PAYLOAD: ', release_payload)
-  console.log(github.context.repository)
-
-  octokit.repos.uploadReleaseAsset
   // Create release
-  const { html_url, id, } = await octokit.request(
+  const { html_url, id } = await octokit.request(
     `POST /repos/${full_name}/releases`,
     {
       ...release_payload,

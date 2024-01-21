@@ -53488,12 +53488,8 @@ try {
     generate_release_notes,
   }
 
-  console.log('RELEASE PAYLOAD: ', release_payload)
-  console.log(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repository)
-
-  octokit.repos.uploadReleaseAsset
   // Create release
-  const { html_url, id, } = await octokit.request(
+  const { html_url, id } = await octokit.request(
     `POST /repos/${full_name}/releases`,
     {
       ...release_payload,
