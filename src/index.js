@@ -73,6 +73,7 @@ try {
   if (release_artifacts) {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log('PATH: ', path)
+      console.log('FILENAME ', getVersionedFilename(path, tag_name))
       return octokit.request(
         `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
         {
