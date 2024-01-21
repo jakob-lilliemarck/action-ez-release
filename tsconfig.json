@@ -1,7 +1,7 @@
 {
-    "extends": "@tsconfig/node20/tsconfig.json",
     "compilerOptions": {
-        "preserveConstEnums": true
+        "target": "es2015",
+        "moduleResolution": "node"
     },
     "include": [
         "src/**/*.ts"
