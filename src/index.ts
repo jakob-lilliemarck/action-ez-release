@@ -44,37 +44,41 @@ try {
   const { owner, repo } = getRepositoryInformation(github.context.payload)
 
   // Create release
-  const { data: { id, html_url } } = await octokit.request(
-    `POST /repos/${repo}/releases`,
-    {
-      owner,
-      repo,
-      tag_name,
-      name: release_name,
-      body: release_body,
-      draft: false,
-      prerelease: false,
-      generate_release_notes,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    })
+  //const { data: { id, html_url } } = await octokit.request(
+  //  `POST /repos/${repo}/releases`,
+  //  {
+  //    owner,
+  //    repo,
+  //    tag_name,
+  //    name: release_name,
+  //    body: release_body,
+  //    draft: false,
+  //    prerelease: false,
+  //    generate_release_notes,
+  //    headers: {
+  //      'X-GitHub-Api-Version': '2022-11-28'
+  //    }
+  //  }
+  //)
 
-  if (release_artifacts) {
-    await Promise.all(getPaths(release_artifacts).map((path) =>
-      octokit.request(`POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${release_artifacts}`, {
-        owner,
-        repo,
-        release_id: `${id}`,
-        data: `@${path}`,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28'
-        }
-      })
-    ))
-  }
+  //if (release_artifacts) {
+  //  await Promise.all(getPaths(release_artifacts).map((path) =>
+  //    octokit.request(
+  //      `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${release_artifacts}`,
+  //      {
+  //        owner,
+  //        repo,
+  //        release_id: `${id}`,
+  //        data: `@${path}`,
+  //        headers: {
+  //          'X-GitHub-Api-Version': '2022-11-28'
+  //        }
+  //      }
+  //    )
+  //  ))
+  //}
 
-  core.setOutput("location", html_url);
+  core.setOutput("location", "test");
 } catch (error) {
   // @ts-ignore
   core.setFailed(error.message);
