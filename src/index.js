@@ -5,18 +5,18 @@ import { Octokit } from '@octokit/action';
 
 const octokit = new Octokit()
 
-const getInput = (key: string) => {
+const getInput = (key) => {
   const value = core.getInput(key);
   return value !== '' ? value : undefined
 }
 
-const getRequired = (key: string) => {
+const getRequired = (key) => {
   const value = getInput(key)
   if (value !== undefined) return value
   throw new Error(`Missing required input ${key}`)
 }
 
-const boolean = (value: string | undefined) => {
+const boolean = (value) => {
   switch (value) {
     case 'true':
       return true
@@ -25,9 +25,9 @@ const boolean = (value: string | undefined) => {
   }
 }
 
-const getPaths = (release_artifacts: string) => release_artifacts.split(",").map((path) => path.trim())
+const getPaths = (release_artifacts) => release_artifacts.split(",").map((path) => path.trim())
 
-const getRepositoryInformation = (payload: WebhookPayload) => {
+const getRepositoryInformation = (payload) => {
   if (!payload.repository) throw new Error(`No key "repository" in payload: \n${JSON.stringify(payload, null, 4)}`)
   const { owner: { name }, full_name } = payload.repository
   if (!(name && full_name)) throw new Error(`Could not extract required information from the pau`)
