@@ -53488,6 +53488,16 @@ const getRepositoryInformation = (payload) => {
   return { owner: name, repo: full_name }
 }
 
+const getFilename = (path) => {
+  const { filename } = s.match(/(?<filename>\w+\.\w+$)/).groups
+  if (!filename) throw new Error(`Could not get filename from path "${path}"`)
+  return filename
+}
+
+const getVersionedFilename = (path, version) => {
+  return getFilename(path).replace(/(?=\.)/, `-${version}`)
+}
+
 try {
   // `who-to-greet` input defined in action metadata file
   const tag_name = getRequired('tag_name');
@@ -53518,7 +53528,7 @@ try {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log('PATH: ', path)
       return octokit.request(
-        `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${path}`,
+        `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
         {
           owner,
           repo,
