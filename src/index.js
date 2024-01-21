@@ -61,9 +61,10 @@ try {
   )
 
   if (release_artifacts) {
-    await Promise.all(getPaths(release_artifacts).map((path) =>
-      octokit.request(
-        `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${release_artifacts}`,
+    await Promise.all(getPaths(release_artifacts).map((path) => {
+      console.log('PATH: ', path)
+      return octokit.request(
+        `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${path}`,
         {
           owner,
           repo,
@@ -74,6 +75,7 @@ try {
           }
         }
       )
+    }
     ))
   }
 
