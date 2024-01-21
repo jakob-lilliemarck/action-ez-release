@@ -53513,7 +53513,7 @@ try {
 
   setTimeout(async () => {
     // Append assets
-    const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
+    const upload_response = await octokit.request(`POST https://uploads.github.com/repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
       ...upload_payload,
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
