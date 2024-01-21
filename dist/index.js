@@ -53488,7 +53488,7 @@ const getInput = (key, type) => {
   return value !== '' ? value : undefined
 }
 
-const required = (key) => {
+const getRequired = (key) => {
   const value = getInput(key)
   if (value !== undefined) return value
   throw new Error(`Missing required input ${key}`)
@@ -53505,7 +53505,7 @@ const boolean = (value) => {
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const tag_name = required(getInput('tag_name'));
+  const tag_name = getRequired('tag_name');
   const name = getInput('release_name');
   const body = getInput('release_body');
   const release_artifacts = getInput('release_artifacts');

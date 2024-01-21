@@ -9,7 +9,7 @@ const getInput = (key, type) => {
   return value !== '' ? value : undefined
 }
 
-const getRequired = (value) => {
+const getRequired = (key) => {
   const value = getInput(key)
   if (value !== undefined) return value
   throw new Error(`Missing required input ${key}`)
