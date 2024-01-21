@@ -44,23 +44,22 @@ try {
     draft: false,
     prerelease: false,
     generate_release_notes,
-    discussion_category_name: release_discussion
   }
 
   console.log('RELEASE PAYLOAD: ', release_payload)
   console.log(github.context.repository)
 
-  //const response = await octokit.request(
-  //  `POST /repos/${github.context.payload.repository.full_name}/releases`,
-  //  {
-  //    ...release_payload,
-  //    headers: {
-  //      'X-GitHub-Api-Version': '2022-11-28'
-  //    }
-  //  })
+  const response = await octokit.request(
+    `POST /repos/${github.context.payload.repository.full_name}/releases`,
+    {
+      ...release_payload,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
 
-  // console.log('RELEASE URL: ', response.url)
-  // core.setOutput("location", response.url);
+  console.log('RELEASE URL: ', response.url)
+  core.setOutput("location", response.url);
 } catch (error) {
   core.setFailed(error.message);
 }

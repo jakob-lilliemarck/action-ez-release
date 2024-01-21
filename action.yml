@@ -18,10 +18,6 @@ inputs:
     description: "Comma separated list of files include as release assets"
     required: false
 
-  release_discussion:
-    description: "Create a discussion for the new release"
-    required: false
-
   generate_release_notes:
     description: "Automatically generate release names and notes"
     required: false
