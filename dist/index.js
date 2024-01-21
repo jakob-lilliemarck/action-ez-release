@@ -53491,31 +53491,32 @@ try {
   console.log('RELEASE PAYLOAD: ', release_payload)
   console.log(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repository)
 
+  octokit.repos.uploadReleaseAsset
   // Create release
-  const response = await octokit.request(
-    `POST /repos/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.repository.full_name}/releases`,
+  const { html_url, id, } = await octokit.request(
+    `POST /repos/${full_name}/releases`,
     {
       ...release_payload,
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     })
+  console.log('RELEASE URL: ', html_url)
 
 
   // Append assets
-  //await octokit.request('PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}', {
-  //  owner: 'OWNER',
-  //  repo: 'REPO',
-  //  asset_id: 'ASSET_ID',
-  //  name: 'foo-1.0.0-osx.zip',
-  //  label: 'Mac binary',
-  //  headers: {
-  //    'X-GitHub-Api-Version': '2022-11-28'
-  //  }
-  //})
+  const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?${release_artifacts, 'test'}`, {
+    owner: owner.name,
+    repo: full_name,
+    release_id: id,
+    data: `@${release_artifacts}`,
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  })
+  console.log('UPLOAD RESPONSE: ', upload_response)
 
-  console.log('RELEASE URL: ', response)
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", response.html_url);
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", html_url);
 } catch (error) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }
