@@ -49,6 +49,7 @@ try {
   console.log('RELEASE PAYLOAD: ', release_payload)
   console.log(github.context.repository)
 
+  // Create release
   const response = await octokit.request(
     `POST /repos/${github.context.payload.repository.full_name}/releases`,
     {
@@ -58,8 +59,21 @@ try {
       }
     })
 
-  console.log('RELEASE URL: ', response.url)
-  core.setOutput("location", response.url);
+
+  // Append assets
+  //await octokit.request('PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}', {
+  //  owner: 'OWNER',
+  //  repo: 'REPO',
+  //  asset_id: 'ASSET_ID',
+  //  name: 'foo-1.0.0-osx.zip',
+  //  label: 'Mac binary',
+  //  headers: {
+  //    'X-GitHub-Api-Version': '2022-11-28'
+  //  }
+  //})
+
+  console.log('RELEASE URL: ', response)
+  core.setOutput("location", response.html_url);
 } catch (error) {
   core.setFailed(error.message);
 }

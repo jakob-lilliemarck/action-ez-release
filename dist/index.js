@@ -53491,6 +53491,7 @@ try {
   console.log('RELEASE PAYLOAD: ', release_payload)
   console.log(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repository)
 
+  // Create release
   const response = await octokit.request(
     `POST /repos/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.repository.full_name}/releases`,
     {
@@ -53500,8 +53501,21 @@ try {
       }
     })
 
-  console.log('RELEASE URL: ', response.url)
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", response.url);
+
+  // Append assets
+  //await octokit.request('PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}', {
+  //  owner: 'OWNER',
+  //  repo: 'REPO',
+  //  asset_id: 'ASSET_ID',
+  //  name: 'foo-1.0.0-osx.zip',
+  //  label: 'Mac binary',
+  //  headers: {
+  //    'X-GitHub-Api-Version': '2022-11-28'
+  //  }
+  //})
+
+  console.log('RELEASE URL: ', response)
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", response.html_url);
 } catch (error) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }
