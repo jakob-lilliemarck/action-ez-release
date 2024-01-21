@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ $# -eq 2 ]
   then
-    ncc build src/index.js --license licenses.txt
+    ncc build src/index.ts --license licenses.txt
     git add .
     git push --delete origin $1
     git tag -d $1
