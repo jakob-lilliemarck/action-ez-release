@@ -53489,7 +53489,7 @@ const getRepositoryInformation = (payload) => {
 }
 
 const getFilename = (path) => {
-  const { filename } = s.match(/(?<filename>\w+\.\w+$)/).groups
+  const { filename } = path.match(/(?<filename>\w+\.\w+$)/).groups
   if (!filename) throw new Error(`Could not get filename from path "${path}"`)
   return filename
 }
