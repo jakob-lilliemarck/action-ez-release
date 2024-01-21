@@ -126,10 +126,6 @@ try {
     data: `@${release_artifacts}`
   }
 
-  console.log('provided_upload_url', provided_upload_url)
-  console.log('upload_url', upload_url)
-  console.log('upload_payload', upload_payload)
-
   // Append assets
   const upload_response = await octokit.request(`POST https://uploads.github.com/repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
     ...upload_payload,
@@ -137,7 +133,6 @@ try {
       'X-GitHub-Api-Version': '2022-11-28'
     }
   })
-  console.log('UPLOAD RESPONSE: ', upload_response)
 
   core.setOutput("location", html_url);
 } catch (error) {

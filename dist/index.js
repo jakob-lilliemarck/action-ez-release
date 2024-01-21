@@ -51630,6 +51630,146 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 2346:
+/***/ ((module, __unused_webpack___webpack_exports__, __nccwpck_require__) => {
+
+__nccwpck_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(1681);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(7133);
+/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(3721);
+/* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nccwpck_require__.n(_octokit_action__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+const octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_2__.Octokit();
+const getInput = (key) => {
+    const value = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput(key);
+    return value !== '' ? value : undefined;
+};
+const getRequired = (key) => {
+    const value = getInput(key);
+    if (value !== undefined)
+        return value;
+    throw new Error(`Missing required input ${key}`);
+};
+const boolean = (value) => {
+    switch (value) {
+        case 'true':
+            return true;
+        default:
+            return false;
+    }
+};
+const getPaths = (release_artifacts) => release_artifacts.split(",").map((path) => path.trim());
+const getRepositoryInformation = (payload) => {
+    if (!payload.repository)
+        throw new Error(`No key "repository" in payload: \n${JSON.stringify(payload, null, 4)}`);
+    const { owner: { name }, full_name } = payload.repository;
+    if (!(name && full_name))
+        throw new Error(`Could not extract required information from the pau`);
+    return { owner: name, repo: full_name };
+};
+//try {
+//  // `who-to-greet` input defined in action metadata file
+//  const tag_name = getRequired('tag_name');
+//  const release_name = getInput('release_name');
+//  const release_body = getInput('release_body');
+//  const release_artifacts = getInput('release_artifacts');
+//  const generate_release_notes = boolean(getInput('generate_release_notes'));
+//  const { owner, repo } = getRepositoryInformation(github.context.payload)
+// Create release
+//const { data: { id, html_url } } = await octokit.request(
+//  `POST /repos/${repo}/releases`,
+//  {
+//    owner,
+//    repo,
+//    tag_name,
+//    name: release_name,
+//    body: release_body,
+//    draft: false,
+//    prerelease: false,
+//    generate_release_notes,
+//    headers: {
+//      'X-GitHub-Api-Version': '2022-11-28'
+//    }
+//  }
+//)
+//if (release_artifacts) {
+//  await Promise.all(getPaths(release_artifacts).map((path) =>
+//    octokit.request(
+//      `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${release_artifacts}`,
+//      {
+//        owner,
+//        repo,
+//        release_id: `${id}`,
+//        data: `@${path}`,
+//        headers: {
+//          'X-GitHub-Api-Version': '2022-11-28'
+//        }
+//      }
+//    )
+//  ))
+//}
+//  core.setOutput("location", "test");
+//} catch (error) {
+//  // @ts-ignore
+//  core.setFailed(error.message);
+//}
+try {
+    // `who-to-greet` input defined in action metadata file
+    const tag_name = getRequired('tag_name');
+    const name = getInput('release_name');
+    const body = getInput('release_body');
+    const release_artifacts = getInput('release_artifacts');
+    const release_discussion = getInput('release_discussion');
+    const generate_release_notes = boolean(getInput('generate_release_notes'));
+    // @ts-ignore
+    const { owner, full_name, } = (_actions_github__WEBPACK_IMPORTED_MODULE_1___default().context.payload.repository);
+    const release_payload = {
+        owner: owner.name,
+        repo: full_name,
+        tag_name,
+        name,
+        body,
+        draft: false,
+        prerelease: false,
+        generate_release_notes,
+    };
+    // Create release
+    const { data: { id, html_url, upload_url: provided_upload_url } } = await octokit.request(`POST /repos/${full_name}/releases`, {
+        ...release_payload,
+        headers: {
+            'X-GitHub-Api-Version': '2022-11-28'
+        }
+    });
+    const upload_url = `POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`;
+    const upload_payload = {
+        owner: owner.name,
+        repo: full_name,
+        release_id: `${id}`,
+        data: `@${release_artifacts}`
+    };
+    // Append assets
+    const upload_response = await octokit.request(`POST https://uploads.github.com/repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
+        ...upload_payload,
+        headers: {
+            'X-GitHub-Api-Version': '2022-11-28'
+        }
+    });
+    _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setOutput("location", html_url);
+}
+catch (error) {
+    //@ts-ignore
+    _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setFailed(error.message);
+}
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -53466,6 +53606,75 @@ module.exports = parseParams
 /******/ }
 /******/ 
 /************************************************************************/
+/******/ /* webpack/runtime/async module */
+/******/ (() => {
+/******/ 	var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 	var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 	var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 	var resolveQueue = (queue) => {
+/******/ 		if(queue && !queue.d) {
+/******/ 			queue.d = 1;
+/******/ 			queue.forEach((fn) => (fn.r--));
+/******/ 			queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 		}
+/******/ 	}
+/******/ 	var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 		if(dep !== null && typeof dep === "object") {
+/******/ 			if(dep[webpackQueues]) return dep;
+/******/ 			if(dep.then) {
+/******/ 				var queue = [];
+/******/ 				queue.d = 0;
+/******/ 				dep.then((r) => {
+/******/ 					obj[webpackExports] = r;
+/******/ 					resolveQueue(queue);
+/******/ 				}, (e) => {
+/******/ 					obj[webpackError] = e;
+/******/ 					resolveQueue(queue);
+/******/ 				});
+/******/ 				var obj = {};
+/******/ 				obj[webpackQueues] = (fn) => (fn(queue));
+/******/ 				return obj;
+/******/ 			}
+/******/ 		}
+/******/ 		var ret = {};
+/******/ 		ret[webpackQueues] = x => {};
+/******/ 		ret[webpackExports] = dep;
+/******/ 		return ret;
+/******/ 	}));
+/******/ 	__nccwpck_require__.a = (module, body, hasAwait) => {
+/******/ 		var queue;
+/******/ 		hasAwait && ((queue = []).d = 1);
+/******/ 		var depQueues = new Set();
+/******/ 		var exports = module.exports;
+/******/ 		var currentDeps;
+/******/ 		var outerResolve;
+/******/ 		var reject;
+/******/ 		var promise = new Promise((resolve, rej) => {
+/******/ 			reject = rej;
+/******/ 			outerResolve = resolve;
+/******/ 		});
+/******/ 		promise[webpackExports] = exports;
+/******/ 		promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 		module.exports = promise;
+/******/ 		body((deps) => {
+/******/ 			currentDeps = wrapDeps(deps);
+/******/ 			var fn;
+/******/ 			var getResult = () => (currentDeps.map((d) => {
+/******/ 				if(d[webpackError]) throw d[webpackError];
+/******/ 				return d[webpackExports];
+/******/ 			}))
+/******/ 			var promise = new Promise((resolve) => {
+/******/ 				fn = () => (resolve(getResult));
+/******/ 				fn.r = 0;
+/******/ 				var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 				currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
+/******/ 			});
+/******/ 			return fn.r ? promise : getResult();
+/******/ 		}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
+/******/ 		queue && (queue.d = 0);
+/******/ 	};
+/******/ })();
+/******/ 
 /******/ /* webpack/runtime/compat get default export */
 /******/ (() => {
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -53500,93 +53709,10 @@ module.exports = parseParams
 /******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
 /******/ 
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(1681);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(7133);
-/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(3721);
-/* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nccwpck_require__.n(_octokit_action__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-const octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_2__.Octokit();
-const getInput = (key) => {
-    const value = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput(key);
-    return value !== '' ? value : undefined;
-};
-const getRequired = (key) => {
-    const value = getInput(key);
-    if (value !== undefined)
-        return value;
-    throw new Error(`Missing required input ${key}`);
-};
-const boolean = (value) => {
-    switch (value) {
-        case 'true':
-            return true;
-        default:
-            return false;
-    }
-};
-const getPaths = (release_artifacts) => release_artifacts.split(",").map((path) => path.trim());
-const getRepositoryInformation = (payload) => {
-    if (!payload.repository)
-        throw new Error(`No key "repository" in payload: \n${JSON.stringify(payload, null, 4)}`);
-    const { owner: { name }, full_name } = payload.repository;
-    if (!(name && full_name))
-        throw new Error(`Could not extract required information from the pau`);
-    return { owner: name, repo: full_name };
-};
-try {
-    // `who-to-greet` input defined in action metadata file
-    const tag_name = getRequired('tag_name');
-    const release_name = getInput('release_name');
-    const release_body = getInput('release_body');
-    const release_artifacts = getInput('release_artifacts');
-    const generate_release_notes = boolean(getInput('generate_release_notes'));
-    const { owner, repo } = getRepositoryInformation((_actions_github__WEBPACK_IMPORTED_MODULE_1___default().context.payload));
-    // Create release
-    //const { data: { id, html_url } } = await octokit.request(
-    //  `POST /repos/${repo}/releases`,
-    //  {
-    //    owner,
-    //    repo,
-    //    tag_name,
-    //    name: release_name,
-    //    body: release_body,
-    //    draft: false,
-    //    prerelease: false,
-    //    generate_release_notes,
-    //    headers: {
-    //      'X-GitHub-Api-Version': '2022-11-28'
-    //    }
-    //  }
-    //)
-    //if (release_artifacts) {
-    //  await Promise.all(getPaths(release_artifacts).map((path) =>
-    //    octokit.request(
-    //      `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${release_artifacts}`,
-    //      {
-    //        owner,
-    //        repo,
-    //        release_id: `${id}`,
-    //        data: `@${path}`,
-    //        headers: {
-    //          'X-GitHub-Api-Version': '2022-11-28'
-    //        }
-    //      }
-    //    )
-    //  ))
-    //}
-    _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setOutput("location", "test");
-}
-catch (error) {
-    // @ts-ignore
-    _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setFailed(error.message);
-}
-
-})();
-
+/******/ 
+/******/ // startup
+/******/ // Load entry module and return exports
+/******/ // This entry module used 'module' so it can't be inlined
+/******/ var __webpack_exports__ = __nccwpck_require__(2346);
+/******/ __webpack_exports__ = await __webpack_exports__;
+/******/ 
