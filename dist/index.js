@@ -53497,8 +53497,6 @@ try {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     })
-  console.log('RELEASE URL: ', html_url)
-
 
   // Append assets
   const upload_response = await octokit.request(`POST /repos/${full_name}/releases/${id}/assets?name=${release_artifacts}`, {
