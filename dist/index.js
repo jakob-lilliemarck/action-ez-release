@@ -53486,7 +53486,6 @@ const getVersionedFilename = (path, version) => {
 }
 
 try {
-  // `who-to-greet` input defined in action metadata file
   const tag_name = getRequired('tag_name');
   const release_name = getInput('release_name');
   const release_body = getInput('release_body');
@@ -53519,6 +53518,7 @@ try {
 
   if (release_artifacts) {
     await Promise.all(getPaths(release_artifacts).map((path) => {
+      console.log(`Uploading artifacts at "${path}"`)
       return octokit.request(
         `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
         {
@@ -53535,7 +53535,7 @@ try {
     ))
   }
 
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", "");
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", html_url);
 } catch (error) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }
