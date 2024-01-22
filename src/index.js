@@ -1,6 +1,5 @@
 import core from '@actions/core';
 import github from '@actions/github';
-import { WebhookPayload } from '@actions/github/lib/interfaces.js';
 import { Octokit } from '@octokit/action';
 
 const octokit = new Octokit()
@@ -53,44 +52,44 @@ try {
   const generate_release_notes = boolean(getInput('generate_release_notes'));
   const { owner, repo } = getRepositoryInformation(github.context.payload)
 
-  const { data: { id, html_url } } = await octokit.request(
-    `POST /repos/${repo}/releases`,
-    {
-      owner,
-      repo,
-      tag_name,
-      name: release_name,
-      body: release_body,
-      draft: false,
-      prerelease: false,
-      generate_release_notes,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    }
-  )
+  console.log('release_artifacts ', release_artifacts)
 
-  if (release_artifacts) {
-    await Promise.all(getPaths(release_artifacts).map((path) => {
-      console.log('PATH: ', path)
-      console.log('FILENAME ', getVersionedFilename(path, tag_name))
-      return octokit.request(
-        `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
-        {
-          owner,
-          repo,
-          release_id: `${id}`,
-          data: `@${path}`,
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28'
-          }
-        }
-      )
-    }
-    ))
-  }
+  // const { data: { id, html_url } } = await octokit.request(
+  //   `POST /repos/${repo}/releases`,
+  //   {
+  //     owner,
+  //     repo,
+  //     tag_name,
+  //     name: release_name,
+  //     body: release_body,
+  //     draft: false,
+  //     prerelease: false,
+  //     generate_release_notes,
+  //     headers: {
+  //       'X-GitHub-Api-Version': '2022-11-28'
+  //     }
+  //   }
+  // )
 
-  core.setOutput("location", "test");
+  //if (release_artifacts) {
+  //  await Promise.all(getPaths(release_artifacts).map((path) => {
+  //    return octokit.request(
+  //      `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
+  //      {
+  //        owner,
+  //        repo,
+  //        release_id: `${id}`,
+  //        data: `@${path}`,
+  //        headers: {
+  //          'X-GitHub-Api-Version': '2022-11-28'
+  //        }
+  //      }
+  //    )
+  //  }
+  //  ))
+  //}
+
+  core.setOutput("location", "");
 } catch (error) {
   core.setFailed(error.message);
 }
