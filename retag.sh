@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 if [ $# -eq 2 ]
   then
     ncc build src/index.js --license licenses.txt

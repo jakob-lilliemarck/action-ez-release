@@ -51,8 +51,10 @@ try {
   const release_artifacts = getInput('release_artifacts');
   const generate_release_notes = boolean(getInput('generate_release_notes'));
   const { owner, repo } = getRepositoryInformation(github.context.payload)
-
-  console.log('release_artifacts ', release_artifacts)
+  getPaths(release_artifacts).map((path, i) => {
+    console.log(`Path ${i}: path`)
+    console.log(`Filename: ${getVersionedFilename(path, tag_name)}`)
+  }
 
   // const { data: { id, html_url } } = await octokit.request(
   //   `POST /repos/${repo}/releases`,
