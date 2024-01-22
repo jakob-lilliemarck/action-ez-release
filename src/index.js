@@ -58,40 +58,40 @@ try {
     console.log(`Filename: ${getVersionedFilename(path, tag_name)}`)
   })
 
-  // const { data: { id, html_url } } = await octokit.request(
-  //   `POST /repos/${repo}/releases`,
-  //   {
-  //     owner,
-  //     repo,
-  //     tag_name,
-  //     name: release_name,
-  //     body: release_body,
-  //     draft: false,
-  //     prerelease: false,
-  //     generate_release_notes,
-  //     headers: {
-  //       'X-GitHub-Api-Version': '2022-11-28'
-  //     }
-  //   }
-  // )
+  const { data: { id, html_url } } = await octokit.request(
+    `POST /repos/${repo}/releases`,
+    {
+      owner,
+      repo,
+      tag_name,
+      name: release_name,
+      body: release_body,
+      draft: false,
+      prerelease: false,
+      generate_release_notes,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    }
+  )
 
-  //if (release_artifacts) {
-  //  await Promise.all(getPaths(release_artifacts).map((path) => {
-  //    return octokit.request(
-  //      `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
-  //      {
-  //        owner,
-  //        repo,
-  //        release_id: `${id}`,
-  //        data: `@${path}`,
-  //        headers: {
-  //          'X-GitHub-Api-Version': '2022-11-28'
-  //        }
-  //      }
-  //    )
-  //  }
-  //  ))
-  //}
+  if (release_artifacts) {
+    await Promise.all(getPaths(release_artifacts).map((path) => {
+      return octokit.request(
+        `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
+        {
+          owner,
+          repo,
+          release_id: `${id}`,
+          data: `@${path}`,
+          headers: {
+            'X-GitHub-Api-Version': '2022-11-28'
+          }
+        }
+      )
+    }
+    ))
+  }
 
   core.setOutput("location", "");
 } catch (error) {
