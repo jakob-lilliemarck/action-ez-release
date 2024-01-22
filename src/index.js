@@ -54,7 +54,7 @@ try {
 
   console.log('Testing testing..')
   getPaths(release_artifacts).map((path, i) => {
-    console.log(`Path ${i}: path`)
+    console.log(`Path ${i}: ${path}`)
     console.log(`Filename: ${getVersionedFilename(path, tag_name)}`)
   })
 
