@@ -77,27 +77,26 @@ try {
   if (release_artifacts) {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log(`Uploading artifacts at "${path}"`)
-
-      const t = readFile(path, (err, data) => {
-        console.log('err ', err)
-        console.log('data ', data)
-      })
-      console.log('t ', t)
-
-      return octokit.request(
-        `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
-        {
-          owner,
-          repo,
-          release_id: `${id}`,
-          data: `@${path}`,
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28'
+      return new Promise((resolve, reject) => {
+        readFile(path, (err, data) => {
+          if (err) reject(err)
+          if (data) {
+            octokit.request(
+              `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
+              {
+                owner,
+                repo,
+                release_id: `${id}`,
+                data: buffer,
+                headers: {
+                  'X-GitHub-Api-Version': '2022-11-28'
+                }
+              }
+            ).then((response) => resolve(response))
           }
-        }
-      )
-    }
-    ))
+        })
+      })
+    }))
   }
 
   core.setOutput("location", html_url);
