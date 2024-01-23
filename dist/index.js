@@ -51686,13 +51686,6 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
 
 /***/ }),
 
-/***/ 3292:
-/***/ ((module) => {
-
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
-
-/***/ }),
-
 /***/ 3685:
 /***/ ((module) => {
 
@@ -53447,7 +53440,7 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(1681);
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(7133);
 /* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(3721);
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(3292);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(7147);
 
 
 
@@ -53529,7 +53522,7 @@ try {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log(`Uploading artifacts at "${path}"`)
 
-      const t = fs_promises__WEBPACK_IMPORTED_MODULE_2__.fs.readFile(path).then((buffer) => {
+      const t = fs__WEBPACK_IMPORTED_MODULE_2__.fs.readFile(path).then((buffer) => {
         console.log('BUFFER', buffer)
       })
 

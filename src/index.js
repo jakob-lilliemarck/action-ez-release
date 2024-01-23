@@ -1,7 +1,7 @@
 import core from '@actions/core';
 import github from '@actions/github';
 import { Octokit } from '@octokit/action';
-import { fs } from 'fs/promises'
+import { fs } from 'fs'
 
 const octokit = new Octokit()
 
