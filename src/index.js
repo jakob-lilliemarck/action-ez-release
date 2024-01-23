@@ -1,6 +1,7 @@
 import core from '@actions/core';
 import github from '@actions/github';
 import { Octokit } from '@octokit/action';
+import { fs } from 'fs/promises'
 
 const octokit = new Octokit()
 
@@ -77,6 +78,11 @@ try {
   if (release_artifacts) {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log(`Uploading artifacts at "${path}"`)
+
+      const t = fs.readFile(path).then((buffer) => {
+        console.log('BUFFER', buffer)
+      })
+
       return octokit.request(
         `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
         {

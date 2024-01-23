@@ -51686,6 +51686,13 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
 
 /***/ }),
 
+/***/ 3292:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
+
+/***/ }),
+
 /***/ 3685:
 /***/ ((module) => {
 
@@ -53439,12 +53446,14 @@ module.exports = parseParams
 __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(1681);
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(7133);
-/* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(3721);
+/* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(3721);
+/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(3292);
 
 
 
 
-const octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_2__.Octokit()
+
+const octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_3__.Octokit()
 
 const getInput = (key) => {
   const value = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput(key);
@@ -53519,6 +53528,11 @@ try {
   if (release_artifacts) {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log(`Uploading artifacts at "${path}"`)
+
+      const t = fs_promises__WEBPACK_IMPORTED_MODULE_2__.fs.readFile(path).then((buffer) => {
+        console.log('BUFFER', buffer)
+      })
+
       return octokit.request(
         `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
         {
