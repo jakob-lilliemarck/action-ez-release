@@ -53530,7 +53530,7 @@ try {
                 owner,
                 repo,
                 release_id: `${id}`,
-                data: buffer,
+                data,
                 headers: {
                   'X-GitHub-Api-Version': '2022-11-28'
                 }
