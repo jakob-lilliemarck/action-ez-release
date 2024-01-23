@@ -53521,9 +53521,11 @@ try {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log(`Uploading artifacts at "${path}"`)
 
-      const t = (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFile)(path).then((buffer) => {
-        console.log('BUFFER', buffer)
+      const t = (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFile)(path, (err, data) => {
+        console.log('err ', err)
+        console.log('data ', data)
       })
+      console.log('t ', t)
 
       return octokit.request(
         `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
