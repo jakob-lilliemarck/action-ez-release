@@ -53495,7 +53495,6 @@ try {
   const generate_release_notes = boolean(getInput('generate_release_notes'));
   const { owner, repo } = getRepositoryInformation(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload)
 
-  console.log('Testing testing..')
   getPaths(release_artifacts).map((path, i) => {
     console.log(`Path ${i}: ${path}`)
     console.log(`Filename: ${getVersionedFilename(path, tag_name)}`)
@@ -53522,7 +53521,7 @@ try {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log(`Uploading artifacts at "${path}"`)
 
-      const t = fs__WEBPACK_IMPORTED_MODULE_2__.fs.readFile(path).then((buffer) => {
+      const t = (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFile)(path).then((buffer) => {
         console.log('BUFFER', buffer)
       })
 

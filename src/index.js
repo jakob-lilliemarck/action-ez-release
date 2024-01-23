@@ -1,7 +1,7 @@
 import core from '@actions/core';
 import github from '@actions/github';
 import { Octokit } from '@octokit/action';
-import { fs } from 'fs'
+import { readFile } from 'fs'
 
 const octokit = new Octokit()
 
@@ -52,7 +52,6 @@ try {
   const generate_release_notes = boolean(getInput('generate_release_notes'));
   const { owner, repo } = getRepositoryInformation(github.context.payload)
 
-  console.log('Testing testing..')
   getPaths(release_artifacts).map((path, i) => {
     console.log(`Path ${i}: ${path}`)
     console.log(`Filename: ${getVersionedFilename(path, tag_name)}`)
@@ -79,7 +78,7 @@ try {
     await Promise.all(getPaths(release_artifacts).map((path) => {
       console.log(`Uploading artifacts at "${path}"`)
 
-      const t = fs.readFile(path).then((buffer) => {
+      const t = readFile(path).then((buffer) => {
         console.log('BUFFER', buffer)
       })
 
