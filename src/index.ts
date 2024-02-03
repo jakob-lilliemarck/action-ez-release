@@ -1,47 +1,25 @@
-import core from '@actions/core';
-import github from '@actions/github';
+import * as core from '@actions/core';
+import * as github from '@actions/github';
 import { Octokit } from '@octokit/action';
 import { readFile } from 'fs'
+import {
+  getVersionedFilename,
+  getRepositoryInformation,
+  boolean,
+  getPaths
+} from './lib';
 
 const octokit = new Octokit()
 
-const getInput = (key) => {
+const getInput = (key: string) => {
   const value = core.getInput(key);
   return value !== '' ? value : undefined
 }
 
-const getRequired = (key) => {
+const getRequired = (key: string) => {
   const value = getInput(key)
   if (value !== undefined) return value
   throw new Error(`Missing required input ${key}`)
-}
-
-const boolean = (value) => {
-  switch (value) {
-    case 'true':
-      return true
-    default:
-      return false
-  }
-}
-
-const getPaths = (release_artifacts) => release_artifacts.split(",").map((path) => path.trim())
-
-const getRepositoryInformation = (payload) => {
-  if (!payload.repository) throw new Error(`No key "repository" in payload: \n${JSON.stringify(payload, null, 4)}`)
-  const { owner: { name }, full_name } = payload.repository
-  if (!(name && full_name)) throw new Error(`Could not extract required information from the pau`)
-  return { owner: name, repo: full_name }
-}
-
-const getFilename = (path) => {
-  const { filename } = path.match(/(?<filename>[\w-]+\.?\w+$)/).groups
-  if (!filename) throw new Error(`Could not get filename from path "${path}"`)
-  return filename
-}
-
-const getVersionedFilename = (path, version) => {
-  return getFilename(path).replace(/(?=\.)/, `-${version}`)
 }
 
 try {
