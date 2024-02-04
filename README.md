@@ -17,7 +17,7 @@ jobs:
 
       - uses: jakob-lilliemarck/action-release@v1
         with:
-          tag_name: 'v1.0.0'
+          tag_name: '_test'
           release_artifacts: |
             foo.txt
             bar.txt
