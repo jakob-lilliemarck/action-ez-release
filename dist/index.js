@@ -52875,10 +52875,6 @@ try {
     const release_artifacts = getInput('release_artifacts');
     const generate_release_notes = (0,_lib__WEBPACK_IMPORTED_MODULE_4__/* .toBool */ .AM)(getInput('generate_release_notes'));
     const { owner, repo } = getRepositoryInformation(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload);
-    (0,_lib__WEBPACK_IMPORTED_MODULE_4__/* .getPaths */ .w3)(release_artifacts).map((path, i) => {
-        console.log(`Path ${i}: ${path}`);
-        console.log(`Filename: ${(0,_lib__WEBPACK_IMPORTED_MODULE_4__/* .getVersionedFilename */ .Ei)(path, tag_name)}`);
-    });
     const { data: { id } } = await octokit.request(`POST /repos/${repo}/releases`, {
         owner,
         repo,
@@ -52930,10 +52926,10 @@ __webpack_async_result__();
 
 /* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
 /* harmony export */   "AM": () => (/* binding */ toBool),
-/* harmony export */   "Ei": () => (/* binding */ getVersionedFilename),
 /* harmony export */   "vt": () => (/* binding */ getFilename),
 /* harmony export */   "w3": () => (/* binding */ getPaths)
 /* harmony export */ });
+/* unused harmony export getVersionedFilename */
 const toBool = (value) => {
     switch (value) {
         case 'true':

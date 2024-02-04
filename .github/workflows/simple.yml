@@ -5,7 +5,8 @@ on: [push]
 jobs:
  main:
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions:
+      contents: write
     steps:
       - run: |
           echo "foo" > ./foo.txt
