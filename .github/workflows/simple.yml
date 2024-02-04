@@ -1,7 +1,3 @@
-# Switch matrix
-Run heterogeneous commands in a GitHub workflow job matrix.
-
-```yml
 name: Create a release
 
 on: [push]
@@ -23,5 +19,3 @@ jobs:
             baz.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-```
