@@ -1,4 +1,4 @@
-name: "Release assets"
+name: "Releases"
 description: "Create a GitHub release with optional assets"
 author: Jakob Lilliemarck
 inputs:
@@ -19,7 +19,7 @@ inputs:
     required: false
 
   generate_release_notes:
-    description: "Automatically generate release names and notes"
+    description: "Automatically generate release names and notes using"
     required: false
 
 outputs:
