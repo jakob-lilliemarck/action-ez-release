@@ -1,6 +1,4 @@
-import type { WebhookPayload } from '@actions/github/lib/interfaces';
-
-export const boolean = (value: string): boolean => {
+export const toBool = (value: string): boolean => {
     switch (value) {
         case 'true':
             return true
@@ -9,21 +7,19 @@ export const boolean = (value: string): boolean => {
     }
 }
 
-export const getPaths = (release_artifacts: string) => release_artifacts.split(/,\s?/).map((path) => path.trim())
-
-export const getRepositoryInformation = (payload: WebhookPayload) => {
-    if (!payload.repository) throw new Error(`No key "repository" in payload: \n${JSON.stringify(payload, null, 4)}`)
-    const { owner: { name }, full_name } = payload.repository
-    if (!(name && full_name)) throw new Error(`Could not extract required information from the pau`)
-    return { owner: name, repo: full_name }
-}
+export const getPaths = (release_artifacts: string) => release_artifacts
+    .split(/\n|,\s?/)
+    .map((path) => path.trim())
+    .filter(s => s)
 
 export const getFilename = (path: string) => {
-    const { filename } = path.match(/(?<filename>[\w-]+\.?\w+$)/).groups
-    if (!filename) throw new Error(`Could not get filename from path "${path}"`)
-    return filename
+    const m = path.match(/(?<name>[\.\w-]+$)/)
+    if (!m) throw new Error(`Could match file name "${path}"`)
+    return m.groups.name
 }
 
 export const getVersionedFilename = (path: string, version: string) => {
-    return getFilename(path).replace(/(?=\.)/, `-${version}`)
+    const m = getFilename(path).match(/^(?<name>\.?[\w-]+)(?<ext>\.\w*)?$/)
+    if (!m) throw new Error(`Could not version filename`)
+    return `${m.groups.name}_${version}${m.groups.ext ?? ''}`
 }

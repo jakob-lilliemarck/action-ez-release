@@ -2,10 +2,10 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { Octokit } from '@octokit/action';
 import { readFile } from 'fs'
+import type { WebhookPayload } from '@actions/github/lib/interfaces';
 import {
   getVersionedFilename,
-  getRepositoryInformation,
-  boolean,
+  toBool,
   getPaths
 } from './lib';
 
@@ -22,12 +22,19 @@ const getRequired = (key: string) => {
   throw new Error(`Missing required input ${key}`)
 }
 
+const getRepositoryInformation = (payload: WebhookPayload) => {
+  if (!payload.repository) throw new Error(`No key "repository" in payload: \n${JSON.stringify(payload, null, 4)}`)
+  const { owner: { name }, full_name } = payload.repository
+  if (!(name && full_name)) throw new Error(`Could not extract required information from the pau`)
+  return { owner: name, repo: full_name }
+}
+
 try {
   const tag_name = getRequired('tag_name');
   const release_name = getInput('release_name');
   const release_body = getInput('release_body');
   const release_artifacts = getInput('release_artifacts');
-  const generate_release_notes = boolean(getInput('generate_release_notes'));
+  const generate_release_notes = toBool(getInput('generate_release_notes'));
   const { owner, repo } = getRepositoryInformation(github.context.payload)
 
   getPaths(release_artifacts).map((path, i) => {
