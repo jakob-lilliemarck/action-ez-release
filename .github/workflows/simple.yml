@@ -15,7 +15,7 @@ jobs:
       - uses: jakob-lilliemarck/action-release@v1
         with:
           tag_name: _test
-          permissions: content
+          permissions: read-all
           release_artifacts: |
             foo.txt
             bar.txt
