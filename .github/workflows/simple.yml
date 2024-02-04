@@ -5,6 +5,7 @@ on: [push]
 jobs:
  main:
     runs-on: ubuntu-latest
+    permissions: read-all
     steps:
       - run: |
           echo "foo" > ./foo.txt
@@ -15,7 +16,6 @@ jobs:
       - uses: jakob-lilliemarck/action-release@v1
         with:
           tag_name: _test
-          permissions: read-all
           release_artifacts: |
             foo.txt
             bar.txt
