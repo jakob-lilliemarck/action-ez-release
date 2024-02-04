@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "foo" > foo.txt
-          echo "bar" > bar.txt
-          echo "bax" > baz.txt
+          echo "foo" > ./foo.txt
+          echo "bar" > ./bar.txt
+          echo "bax" > ./baz.txt
 
       - uses: jakob-lilliemarck/action-release@v1
         with:
