@@ -1,4 +1,4 @@
-name: "Tag and release"
+name: "Ez release"
 description: "Create a GitHub release with optional assets"
 author: Jakob Lilliemarck
 inputs:
