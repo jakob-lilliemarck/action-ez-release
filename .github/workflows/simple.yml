@@ -10,6 +10,7 @@ jobs:
           echo "foo" > ./foo.txt
           echo "bar" > ./bar.txt
           echo "bax" > ./baz.txt
+          ls -R
 
       - uses: jakob-lilliemarck/action-release@v1
         with:
