@@ -20,7 +20,7 @@ jobs:
           echo "bax" > ./baz.txt
           ls -R
 
-      - uses: jakob-lilliemarck/action-release@v1
+      - uses: jakob-lilliemarck/action-ez-release@v1
         with:
           tag_name: _test
           release_artifacts: |

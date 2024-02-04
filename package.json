@@ -1,5 +1,5 @@
 {
-  "name": "action-release",
+  "name": "action-ez-release",
   "version": "1.0.0",
   "description": "Create a GitHub release and optionally append release assets",
   "main": "dist/index.js",
