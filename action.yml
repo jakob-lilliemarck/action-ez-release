@@ -1,4 +1,4 @@
-name: "Jeez! Release!"
+name: "Tag and release"
 description: "Create a GitHub release with optional assets"
 author: Jakob Lilliemarck
 inputs:
