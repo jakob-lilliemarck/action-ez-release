@@ -1,5 +1,5 @@
-# Switch matrix
-Run heterogeneous commands in a GitHub workflow job matrix.
+# Create a release
+Create a GitHub release and optionally append release assets
 
 ```yml
 name: Create a release
@@ -7,7 +7,7 @@ name: Create a release
 on: [push]
 
 jobs:
- main:
+ simple:
     runs-on: ubuntu-latest
     steps:
       - run: |
@@ -17,6 +17,7 @@ jobs:
 
       - uses: jakob-lilliemarck/action-release@v1
         with:
+          tag_name: 'v1.0.0'
           release_artifacts: |
             foo.txt
             bar.txt
