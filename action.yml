@@ -23,8 +23,8 @@ inputs:
     required: false
 
 outputs:
-  location:
-    description: "The URI of the GitHub release"
+  release_id:
+    description: "The release id of the newly created GitHub release"
 
 runs:
   using: "node20"

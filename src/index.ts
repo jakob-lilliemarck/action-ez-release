@@ -6,7 +6,8 @@ import type { WebhookPayload } from '@actions/github/lib/interfaces';
 import {
   getVersionedFilename,
   toBool,
-  getPaths
+  getPaths,
+  getFilename
 } from './lib';
 
 const octokit = new Octokit()
@@ -42,7 +43,7 @@ try {
     console.log(`Filename: ${getVersionedFilename(path, tag_name)}`)
   })
 
-  const { data: { id, html_url } } = await octokit.request(
+  const { data: { id } } = await octokit.request(
     `POST /repos/${repo}/releases`,
     {
       owner,
@@ -61,13 +62,13 @@ try {
 
   if (release_artifacts) {
     await Promise.all(getPaths(release_artifacts).map((path) => {
-      console.log(`Uploading artifacts at "${path}"`)
+      console.info(`Uploading artifacts at "${path}"`)
       return new Promise((resolve, reject) => {
         readFile(path, (err, data) => {
           if (err) reject(err)
           if (data) {
             octokit.request(
-              `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getVersionedFilename(path, tag_name)}`,
+              `POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${getFilename(path)}`,
               {
                 owner,
                 repo,
@@ -84,7 +85,7 @@ try {
     }))
   }
 
-  core.setOutput("location", html_url);
+  core.setOutput("release_id", id);
 } catch (error) {
   core.setFailed(error.message);
 }

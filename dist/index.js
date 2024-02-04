@@ -52879,7 +52879,7 @@ try {
         console.log(`Path ${i}: ${path}`);
         console.log(`Filename: ${(0,_lib__WEBPACK_IMPORTED_MODULE_4__/* .getVersionedFilename */ .Ei)(path, tag_name)}`);
     });
-    const { data: { id, html_url } } = await octokit.request(`POST /repos/${repo}/releases`, {
+    const { data: { id } } = await octokit.request(`POST /repos/${repo}/releases`, {
         owner,
         repo,
         tag_name,
@@ -52894,13 +52894,13 @@ try {
     });
     if (release_artifacts) {
         await Promise.all((0,_lib__WEBPACK_IMPORTED_MODULE_4__/* .getPaths */ .w3)(release_artifacts).map((path) => {
-            console.log(`Uploading artifacts at "${path}"`);
+            console.info(`Uploading artifacts at "${path}"`);
             return new Promise((resolve, reject) => {
                 (0,fs__WEBPACK_IMPORTED_MODULE_2__.readFile)(path, (err, data) => {
                     if (err)
                         reject(err);
                     if (data) {
-                        octokit.request(`POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${(0,_lib__WEBPACK_IMPORTED_MODULE_4__/* .getVersionedFilename */ .Ei)(path, tag_name)}`, {
+                        octokit.request(`POST https://uploads.github.com/repos/${repo}/releases/${id}/assets?name=${(0,_lib__WEBPACK_IMPORTED_MODULE_4__/* .getFilename */ .vt)(path)}`, {
                             owner,
                             repo,
                             release_id: `${id}`,
@@ -52914,7 +52914,7 @@ try {
             });
         }));
     }
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("location", html_url);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("release_id", id);
 }
 catch (error) {
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
@@ -52931,9 +52931,9 @@ __webpack_async_result__();
 /* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
 /* harmony export */   "AM": () => (/* binding */ toBool),
 /* harmony export */   "Ei": () => (/* binding */ getVersionedFilename),
+/* harmony export */   "vt": () => (/* binding */ getFilename),
 /* harmony export */   "w3": () => (/* binding */ getPaths)
 /* harmony export */ });
-/* unused harmony export getFilename */
 const toBool = (value) => {
     switch (value) {
         case 'true':
